@@ -1,15 +1,23 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
  
-# Módulos
+# Modules
 import sys
 import pygame
 from pygame.locals import *
 import numpy as np
-
-# Import pygameMenu
 import pygameMenu
 from pygameMenu.locals import *
+
+# Colors
+# ---------------------------------------------------------------------
+alive = (251,224,10)
+dead = (53,83,87)
+menu_color = (170, 170, 170)
+menu_color_title = (170,65,50)
+color_selected = (170,65,50)
+font_color = (0, 0, 0)
+text_color = (0, 0, 0)
 
 # Global variables
 # ---------------------------------------------------------------------
@@ -18,18 +26,11 @@ wHeight = 590
 nrows = 30
 ncols = 30
 spacing = 1
-alive = (251,224,10)
 frame_rate = 10
-dead = (53,83,87)
-menu_color = (170, 170, 170)
-menu_color_title = (170,65,50)
-color_selected = (170,65,50)
-font_color = (0, 0, 0)
-text_color = (0, 0, 0)
 rects = []
 universe = []
 screen = pygame.display.set_mode((wWidth, wHeight))
-pygame.display.set_caption("Game of life")
+pygame.display.set_caption("Game of Life")
 clock = pygame.time.Clock()
 paused = False
 # ---------------------------------------------------------------------
@@ -121,7 +122,7 @@ def game_of_life():
             if event.type == QUIT:
                 exit()
             elif event.type == KEYDOWN:
-                if event.key == K_ESCAPE and main_menu.is_disabled():
+                if (event.key == K_ESCAPE or event.key == K_RETURN) and main_menu.is_disabled():
                     main_menu.enable()
             elif event.type == MOUSEBUTTONDOWN:
                 x, y = pygame.mouse.get_pos()
@@ -162,6 +163,7 @@ about_menu = pygameMenu.TextMenu(screen,
                                 window_height=wHeight,
                                 window_width=wWidth
                                 )
+
 ABOUT = ['The game of Life',
          'Author: A. Villas',
          PYGAMEMENU_TEXT_NEWLINE,
@@ -195,7 +197,7 @@ settings_menu = pygameMenu.TextMenu(screen,
                                 window_width = wWidth
                                 )
 
-settings_menu.add_selector('Frame_rate', 
+settings_menu.add_selector('Frame rate', 
                            list(map(lambda i: (str(i), i), range(frame_rate,51))) +\
                            list(map(lambda i: (str(i), i), range(0,frame_rate))),
                            onreturn=None,
@@ -211,7 +213,6 @@ settings_menu.add_selector('Rows (*)',
                            onreturn=None,
                            onchange=change_nrows)
 settings_menu.add_line('(*): Requieres restart')
-
 settings_menu.add_option('Return to menu', PYGAME_MENU_BACK)
     
 # Main menu
