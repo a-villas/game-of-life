@@ -128,7 +128,6 @@ def game_of_life():
                 x, y = pygame.mouse.get_pos()
                 i = int(x / wWidth * ncols)
                 j = int(y / wHeight * nrows)
-                print(i,j)
                 universe[j][i] = abs(1 - universe[j][i])
         main_menu.mainloop(events)
         draw_rects(rects, universe, screen)
@@ -251,7 +250,6 @@ main_menu.enable()
 
 # Main loop
 while True:
-    print(paused)
     clock.tick(frame_rate)
     events = pygame.event.get()
     for event in events:
